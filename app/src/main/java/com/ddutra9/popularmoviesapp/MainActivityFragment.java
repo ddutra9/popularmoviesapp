@@ -27,8 +27,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -185,20 +188,32 @@ public class MainActivityFragment extends Fragment {
                 JSONObject movieJson = moviesArray.getJSONObject(i);
 
                 Log.d(TAG, "moviesJson: " + movieJson.toString());
-                Log.d(TAG, "movies: " + movies.length + " i: " + i);
 
                 movie = new Movie();
 
                 movie.setTitle(movieJson.getString(TITLE));
                 movie.setOverview(movieJson.getString(OVERVIEW));
                 movie.setVoteAverage(movieJson.getDouble(VOTE));
-//            movie.setReleaseDate(movieJson.get(RELEASE_DATE));
+                movie.setReleaseDate(parseDateFromAPI(movieJson.getString(RELEASE_DATE)));
                 movie.setPosterPath(movieJson.getString(IMAGE));
 
                 movies[i] = movie;
             }
 
             return movies;
+        }
+        
+        private Date parseDateFromAPI(String dtStr){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+            Date dt = null;
+            try {
+                dt = sdf.parse(dtStr);
+            } catch (ParseException e) {
+                Log.e(TAG, "erro ao fazer parse data", e);
+            }
+
+            return dt;
         }
 
         @Override
