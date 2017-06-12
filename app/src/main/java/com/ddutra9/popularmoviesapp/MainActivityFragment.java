@@ -1,6 +1,8 @@
 package com.ddutra9.popularmoviesapp;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -56,8 +58,7 @@ public class MainActivityFragment extends Fragment {
 
         List<Movie> movieList = new ArrayList<Movie>();
 
-        adapter = new ArrayAdapter<Movie>(getActivity(),
-                R.layout.list_item_movie, R.id.list_item_movie_textview, movieList);
+        adapter = new MovieAdapter(getActivity(), movieList);
 
         GridView gridMovies = (GridView)view.findViewById(R.id.grid_view_movies);
         gridMovies.setAdapter(adapter);
@@ -77,8 +78,19 @@ public class MainActivityFragment extends Fragment {
         updateMovies();
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
     private void updateMovies(){
-        new MoviesTask(getContext()).execute(new String[]{});
+        if(isOnline()){
+            new MoviesTask(getContext()).execute(new String[]{});
+        } else {
+            Toast.makeText(getActivity(), "Favor verificar sua coneccao com a internet!", Toast.LENGTH_LONG);
+        }
     }
 
 
