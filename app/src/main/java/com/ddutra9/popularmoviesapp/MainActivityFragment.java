@@ -1,6 +1,7 @@
 package com.ddutra9.popularmoviesapp;
 
 import android.content.Context;
+import android.graphics.Movie;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -17,7 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.ddutra9.popularmoviesapp.model.Movie;
+import com.ddutra9.popularmoviesapp.model.ParcelableMovie;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +42,8 @@ import java.util.List;
  */
 public class MainActivityFragment extends Fragment {
 
-    private ArrayAdapter<Movie> adapter;
+    private ArrayAdapter<ParcelableMovie> adapter;
+    private ArrayList<ParcelableMovie> movieList;
 
     public MainActivityFragment() {
     }
@@ -55,8 +57,12 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        List<Movie> movieList = new ArrayList<Movie>();
+        if(savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
+            movieList = new ArrayList<ParcelableMovie>();
+        }
+        else {
+            movieList = savedInstanceState.getParcelableArrayList("movies");
+        }
 
         adapter = new MovieAdapter(getActivity(), movieList);
 
@@ -78,6 +84,12 @@ public class MainActivityFragment extends Fragment {
         updateMovies();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList("movies", movieList);
+        super.onSaveInstanceState(outState);
+    }
+
     public boolean isOnline() {
         ConnectivityManager cm =
                 (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -94,7 +106,7 @@ public class MainActivityFragment extends Fragment {
     }
 
 
-    private class MoviesTask extends AsyncTask<String, Void, Movie[]> {
+    private class MoviesTask extends AsyncTask<String, Void, ParcelableMovie[]> {
 
         private final String  THE_MOVIE_URL = "https://api.themoviedb.org/3/movie/";
         private final String TAG = MoviesTask.class.getSimpleName();
@@ -106,7 +118,7 @@ public class MainActivityFragment extends Fragment {
         }
 
         @Override
-        protected Movie[] doInBackground(String... params) {
+        protected ParcelableMovie[] doInBackground(String... params) {
 
 //            if (params.length == 0) {
 //                return null;
@@ -181,7 +193,7 @@ public class MainActivityFragment extends Fragment {
             return null;
         }
 
-        private Movie[] getMoviesFromJson(String moviesJsonString) throws JSONException {
+        private ParcelableMovie[] getMoviesFromJson(String moviesJsonString) throws JSONException {
             // These are the names of the JSON objects that need to be extracted.
             final String RESULTS = "results";
             final String TITLE = "title";
@@ -193,15 +205,15 @@ public class MainActivityFragment extends Fragment {
             JSONObject moviesJson = new JSONObject(moviesJsonString);
             JSONArray moviesArray = moviesJson.getJSONArray(RESULTS);
 
-            Movie[] movies = new Movie[moviesArray.length()];
-            Movie movie = null;
+            ParcelableMovie[] movies = new ParcelableMovie[moviesArray.length()];
+            ParcelableMovie movie = null;
             for(int i = 0; i < moviesArray.length(); i++) {
 
                 JSONObject movieJson = moviesArray.getJSONObject(i);
 
                 Log.d(TAG, "moviesJson: " + movieJson.toString());
 
-                movie = new Movie();
+                movie = new ParcelableMovie();
 
                 movie.setTitle(movieJson.getString(TITLE));
                 movie.setOverview(movieJson.getString(OVERVIEW));
@@ -215,21 +227,21 @@ public class MainActivityFragment extends Fragment {
             return movies;
         }
         
-        private Date parseDateFromAPI(String dtStr){
+        private Long parseDateFromAPI(String dtStr){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-            Date dt = null;
             try {
-                dt = sdf.parse(dtStr);
+                Date dt = sdf.parse(dtStr);
+                return dt.getTime();
             } catch (ParseException e) {
                 Log.e(TAG, "erro ao fazer parse data", e);
             }
 
-            return dt;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(Movie[] movies) {
+        protected void onPostExecute(ParcelableMovie[] movies) {
             if(movies != null){
                 adapter.clear();
                 adapter.addAll(Arrays.asList(movies));
