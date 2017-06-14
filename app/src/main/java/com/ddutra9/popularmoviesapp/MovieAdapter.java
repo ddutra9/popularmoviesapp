@@ -1,7 +1,6 @@
 package com.ddutra9.popularmoviesapp;
 
 import android.content.Context;
-import android.graphics.Movie;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -40,7 +39,6 @@ public class MovieAdapter extends ArrayAdapter<ParcelableMovie> {
         }
 
         ImageView iconView = (ImageView) convertView.findViewById(R.id.list_item_icon);
-        iconView.setScaleType(ImageView.ScaleType.FIT_XY);
         Picasso.with(getContext()).load(PREFIX_IMAGE_URL + movie.getPosterPath()).into(iconView);
         Log.d(TAG, "imagePath: " + PREFIX_IMAGE_URL + movie.getPosterPath());
 
