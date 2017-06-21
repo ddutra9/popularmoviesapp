@@ -1,15 +1,16 @@
 package com.ddutra9.popularmoviesapp;
 
 import android.content.Context;
-import android.graphics.Movie;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,32 +19,34 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.ddutra9.popularmoviesapp.data.MoviesContract;
 import com.ddutra9.popularmoviesapp.model.ParcelableMovie;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>  {
 
     private ArrayAdapter<ParcelableMovie> adapter;
     private ArrayList<ParcelableMovie> movieList;
+
+    private static final String[] MOVIE_COLUMNS = {
+            MoviesContract.MovieEntry._ID,
+            MoviesContract.MovieEntry.COLUMN_TITLE,
+            MoviesContract.MovieEntry.COLUMN_OVERVIEW,
+            MoviesContract.MovieEntry.COLUMN_VOTE_AVERAGE,
+            MoviesContract.MovieEntry.COLUMN_RELEASE_DATE,
+            MoviesContract.MovieEntry.COLUMN_POSTER_PATH
+    };
+
+    static final int COLUMN_ID = 0;
+    static final int COLUMN_TITLE = 1;
+    static final int COLUMN_OVERVIEW = 2;
+    static final int COLUMN_VOTE_AVERAGE = 3;
+    static final int COLUMN_RELEASE_DATE = 4;
+    static final int COLUMN_POSTER_PATH = 5;
 
     public MainActivityFragment() {
     }
@@ -105,147 +108,21 @@ public class MainActivityFragment extends Fragment {
         }
     }
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String sortOrder = MoviesContract.MovieEntry.COLUMN_RELEASE_DATE + " ASC";
+        Uri uri = MoviesContract.MovieEntry.CONTENT_URI;
 
-    private class MoviesTask extends AsyncTask<String, Void, ParcelableMovie[]> {
+        return new CursorLoader(getActivity(), uri, MOVIE_COLUMNS, null, null, sortOrder);
+    }
 
-        private final String  THE_MOVIE_URL = "https://api.themoviedb.org/3/movie/";
-        private final String TAG = MoviesTask.class.getSimpleName();
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+//        adapter.swa(data);
+    }
 
-        final Context context;
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
 
-        public MoviesTask(Context context){
-            this.context = context;
-        }
-
-        @Override
-        protected ParcelableMovie[] doInBackground(String... params) {
-
-//            if (params.length == 0) {
-//                return null;
-//            }
-
-
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
-            String moviesJsonString = null;
-
-            try {
-                final String QUERY_PARAM = "popular";
-                final String API_KEY = "api_key";
-                final String LANGUAGE = "language";
-
-                Uri builtUri = Uri.parse(THE_MOVIE_URL).buildUpon()
-                        .appendPath(QUERY_PARAM)
-                        .appendQueryParameter(API_KEY, context.getString(R.string.API_MOVIE_KEY))
-                        .appendQueryParameter(LANGUAGE, "pt-BR")
-                        .build();
-
-                Log.d(TAG, "url: " + builtUri.toString());
-                URL url = new URL(builtUri.toString());
-
-
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null) {
-                    return null;
-                }
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
-                }
-
-                if (buffer.length() == 0) {
-                    return null;
-                }
-
-                moviesJsonString = buffer.toString();
-                Log.d(TAG, moviesJsonString);
-
-            } catch (IOException e) {
-                Log.e(TAG, "Error ", e);
-                return null;
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        Log.e(TAG, "Erro ao fechar stream", e);
-                    }
-                }
-            }
-
-            try {
-                return getMoviesFromJson(moviesJsonString);
-            } catch (JSONException e) {
-                Log.e(TAG, e.getMessage(), e);
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        private ParcelableMovie[] getMoviesFromJson(String moviesJsonString) throws JSONException {
-            // These are the names of the JSON objects that need to be extracted.
-            final String RESULTS = "results";
-            final String TITLE = "title";
-            final String OVERVIEW = "overview";
-            final String VOTE = "vote_average";
-            final String RELEASE_DATE = "release_date";
-            final String IMAGE = "poster_path";
-
-            JSONObject moviesJson = new JSONObject(moviesJsonString);
-            JSONArray moviesArray = moviesJson.getJSONArray(RESULTS);
-
-            ParcelableMovie[] movies = new ParcelableMovie[moviesArray.length()];
-            ParcelableMovie movie = null;
-            for(int i = 0; i < moviesArray.length(); i++) {
-
-                JSONObject movieJson = moviesArray.getJSONObject(i);
-
-                Log.d(TAG, "moviesJson: " + movieJson.toString());
-
-                movie = new ParcelableMovie();
-
-                movie.setTitle(movieJson.getString(TITLE));
-                movie.setOverview(movieJson.getString(OVERVIEW));
-                movie.setVoteAverage(movieJson.getDouble(VOTE));
-                movie.setReleaseDate(parseDateFromAPI(movieJson.getString(RELEASE_DATE)));
-                movie.setPosterPath(movieJson.getString(IMAGE));
-
-                movies[i] = movie;
-            }
-
-            return movies;
-        }
-        
-        private Long parseDateFromAPI(String dtStr){
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-            try {
-                Date dt = sdf.parse(dtStr);
-                return dt.getTime();
-            } catch (ParseException e) {
-                Log.e(TAG, "erro ao fazer parse data", e);
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(ParcelableMovie[] movies) {
-            if(movies != null){
-                adapter.clear();
-                adapter.addAll(Arrays.asList(movies));
-            }
-        }
     }
 }

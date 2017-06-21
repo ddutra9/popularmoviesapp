@@ -8,13 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by donato on 20/06/17.
  */
 
-public class MovieDBHelper extends SQLiteOpenHelper {
+public class MoviesDBHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
 
     public static final String DATABASE_NAME = "movie.db";
 
-    public MovieDBHelper(Context context) {
+    public MoviesDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
