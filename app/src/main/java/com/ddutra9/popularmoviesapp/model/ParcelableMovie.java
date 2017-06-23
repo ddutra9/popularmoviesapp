@@ -12,13 +12,13 @@ public class ParcelableMovie implements Parcelable {
     private String title;
     private String overview;
     private Double voteAverage;
-    private String releaseDate;
+    private Long releaseDate;
     private String posterPath;
 
     public ParcelableMovie(){
     }
 
-    public ParcelableMovie(String title, String overview, Double voteAverage, String releaseDate, String posterPath){
+    public ParcelableMovie(String title, String overview, Double voteAverage, Long releaseDate, String posterPath){
         this.setTitle(title);
         this.setOverview(overview);
         this.setVoteAverage(voteAverage);
@@ -31,7 +31,7 @@ public class ParcelableMovie implements Parcelable {
         setOverview(in.readString());
         setPosterPath(in.readString());
         setVoteAverage(in.readDouble());
-        setReleaseDate(in.readString());
+        setReleaseDate(in.readLong());
     }
 
     public static final Creator<ParcelableMovie> CREATOR = new Creator<ParcelableMovie>() {
@@ -57,7 +57,7 @@ public class ParcelableMovie implements Parcelable {
         dest.writeString(getOverview());
         dest.writeString(getPosterPath());
         dest.writeDouble(getVoteAverage());
-        dest.writeString(getReleaseDate());
+        dest.writeLong(getReleaseDate());
     }
 
     public String getTitle() {
@@ -84,11 +84,11 @@ public class ParcelableMovie implements Parcelable {
         this.voteAverage = voteAverage;
     }
 
-    public String getReleaseDate() {
+    public Long getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
+    public void setReleaseDate(Long releaseDate) {
         this.releaseDate = releaseDate;
     }
 
