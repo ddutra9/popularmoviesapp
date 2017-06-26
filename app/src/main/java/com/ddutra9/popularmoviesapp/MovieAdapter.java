@@ -33,15 +33,29 @@ public class MovieAdapter extends ArrayAdapter<ParcelableMovie> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ParcelableMovie movie = getItem(position);
+        ViewHolder viewHolder;
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_movie, parent, false);
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        ImageView iconView = (ImageView) convertView.findViewById(R.id.list_item_icon);
-        Picasso.with(getContext()).load(PREFIX_IMAGE_URL + movie.getPosterPath()).into(iconView);
+        Picasso.with(getContext()).load(PREFIX_IMAGE_URL + movie.getPosterPath()).into(viewHolder.iconView);
         Log.d(TAG, "imagePath: " + PREFIX_IMAGE_URL + movie.getPosterPath());
 
         return convertView;
+    }
+
+
+    public static class ViewHolder {
+
+        public final ImageView iconView;
+
+        public ViewHolder(View view) {
+            iconView = (ImageView) view.findViewById(R.id.movie_image);
+        }
     }
 }
