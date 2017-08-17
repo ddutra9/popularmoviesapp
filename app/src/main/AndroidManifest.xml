@@ -30,6 +30,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ddutra9.popularmoviesapp.SettingsActivity" />
         </activity>
+        <activity android:name=".MovieDetailActivity"></activity>
     </application>
 
 </manifest>
