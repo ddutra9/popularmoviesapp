@@ -1,6 +1,7 @@
 package com.ddutra9.popularmoviesapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -27,7 +29,8 @@ import java.util.ArrayList;
  */
 public class MainActivityFragment extends Fragment implements AsyncTaskDelegate {
 
-    private static String TAG = MainActivityFragment.class.getSimpleName();
+    private static final String TAG = MainActivityFragment.class.getSimpleName();
+    public static final String SELECTED_MOVIE = "SELECTED_MOVIE";
 
     private ArrayAdapter<ParcelableMovie> adapter;
     private ArrayList<ParcelableMovie> movieList;
@@ -55,6 +58,15 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate 
 
         GridView gridMovies = (GridView)view.findViewById(R.id.grid_view_movies);
         gridMovies.setAdapter(adapter);
+
+        gridMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+                intent.putExtra(SELECTED_MOVIE, movieList.get(position));
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

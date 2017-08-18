@@ -16,7 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/vertical_padding"
+            android:layout_marginBottom="@dimen/vertical_padding"
             android:orientation="horizontal">
 
             <ImageView
@@ -51,6 +52,19 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_desc_movie"
+            android:paddingTop="@dimen/vertical_padding"
+            android:paddingBottom="@dimen/vertical_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Por fim, você otimizará o fluxo completo da interação do usuário final, incluindo o que foi desenvolvido no estágio 1, e otimizá-lo para funcionar em tablets."/>
+
+        <ListView
+            android:id="@+id/list_trailer_videos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></ListView>
 
     </LinearLayout>
 
