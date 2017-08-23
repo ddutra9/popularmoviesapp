@@ -99,7 +99,7 @@ public class MoviesTask extends AsyncTask<String, Void, ParcelableMovie[]> {
         }
 
         try {
-            return MoviesProcessor.process(moviesJsonString);
+            return MoviesProcessor.process(moviesJsonString, context);
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage(), e);
             e.printStackTrace();
