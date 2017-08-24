@@ -2,6 +2,7 @@ package com.ddutra9.popularmoviesapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
 import com.ddutra9.popularmoviesapp.data.MoviesContract;
@@ -66,7 +67,20 @@ public class MoviesProcessor {
             values.put(MoviesContract.MovieEntry.COLUMN_RELEASE_DATE, movie.getReleaseDate());
             values.put(MoviesContract.MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
 
-            cVVector.add(values);
+            Cursor cursor = context.getContentResolver().query(
+                    MoviesContract.MovieEntry.CONTENT_URI,
+                    new String[]{MoviesContract.MovieEntry._ID},
+                    MoviesContract.MovieEntry.COLUMN_TITLE + " = ?",
+                    new String[]{movie.getTitle()},
+                    null);
+
+            if(cursor.moveToNext()){
+                int id = cursor.getInt(0);
+                context.getContentResolver().update(MoviesContract.MovieEntry.CONTENT_URI, values, MoviesContract.MovieEntry._ID + " = ?",
+                        new String[]{String.valueOf(id)});
+            } else {
+                cVVector.add(values);
+            }
         }
 
         if ( cVVector.size() > 0 ) {
