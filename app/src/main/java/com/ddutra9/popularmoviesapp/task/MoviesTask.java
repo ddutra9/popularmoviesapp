@@ -1,10 +1,12 @@
-package com.ddutra9.popularmoviesapp;
+package com.ddutra9.popularmoviesapp.task;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.ddutra9.popularmoviesapp.MoviesProcessor;
+import com.ddutra9.popularmoviesapp.R;
 import com.ddutra9.popularmoviesapp.interfaces.AsyncTaskDelegate;
 import com.ddutra9.popularmoviesapp.model.ParcelableMovie;
 

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.ddutra9.popularmoviesapp.interfaces.AsyncTaskDelegate;
 import com.ddutra9.popularmoviesapp.model.ParcelableMovie;
+import com.ddutra9.popularmoviesapp.task.MoviesTask;
 
 import java.util.ArrayList;
 

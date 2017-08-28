@@ -81,6 +81,8 @@ public class MoviesProcessor {
             } else {
                 cVVector.add(values);
             }
+
+            cursor.close();
         }
 
         if ( cVVector.size() > 0 ) {
