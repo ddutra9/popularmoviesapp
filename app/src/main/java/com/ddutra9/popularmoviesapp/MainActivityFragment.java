@@ -20,7 +20,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.ddutra9.popularmoviesapp.interfaces.AsyncTaskDelegate;
-import com.ddutra9.popularmoviesapp.model.ParcelableMovie;
+import com.ddutra9.popularmoviesapp.model.Movie;
 import com.ddutra9.popularmoviesapp.task.MoviesTask;
 
 import java.util.ArrayList;
@@ -33,8 +33,8 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate 
     private static final String TAG = MainActivityFragment.class.getSimpleName();
     public static final String SELECTED_MOVIE = "SELECTED_MOVIE";
 
-    private ArrayAdapter<ParcelableMovie> adapter;
-    private ArrayList<ParcelableMovie> movieList;
+    private ArrayAdapter<Movie> adapter;
+    private ArrayList<Movie> movieList;
 
     public MainActivityFragment() {
     }
@@ -49,7 +49,7 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if(savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
-            movieList = new ArrayList<ParcelableMovie>();
+            movieList = new ArrayList<Movie>();
         }
         else {
             movieList = savedInstanceState.getParcelableArrayList("movies");
@@ -114,7 +114,7 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate 
     @Override
     public void processFinish(Object output) {
         if(output != null){
-            ParcelableMovie[] movies = (ParcelableMovie[]) output;
+            Movie[] movies = (Movie[]) output;
 
             adapter.clear();
             adapter.addAll(movies);

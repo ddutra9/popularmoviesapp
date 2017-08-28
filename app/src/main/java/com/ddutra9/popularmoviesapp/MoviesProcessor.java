@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.ddutra9.popularmoviesapp.data.MoviesContract;
-import com.ddutra9.popularmoviesapp.model.ParcelableMovie;
+import com.ddutra9.popularmoviesapp.model.Movie;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +27,7 @@ public class MoviesProcessor {
 
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-    public static ParcelableMovie[] process(String input, Context context)throws JSONException {
+    public static Movie[] process(String input, Context context)throws JSONException {
         // These are the names of the JSON objects that need to be extracted.
         final String RESULTS = "results";
         final String TITLE = "title";
@@ -39,8 +39,8 @@ public class MoviesProcessor {
         JSONObject moviesJson = new JSONObject(input);
         JSONArray moviesArray = moviesJson.getJSONArray(RESULTS);
 
-        ParcelableMovie[] movies = new ParcelableMovie[moviesArray.length()];
-        ParcelableMovie movie = null;
+        Movie[] movies = new Movie[moviesArray.length()];
+        Movie movie = null;
         Vector<ContentValues> cVVector = new Vector<ContentValues>(moviesArray.length());
 
         for (int i = 0; i < moviesArray.length(); i++) {
@@ -49,7 +49,7 @@ public class MoviesProcessor {
 
             Log.d(TAG, "moviesJson: " + movieJson.toString());
 
-            movie = new ParcelableMovie();
+            movie = new Movie();
 
             movie.setTitle(movieJson.optString(TITLE));
             movie.setOverview(movieJson.optString(OVERVIEW));

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
-import com.ddutra9.popularmoviesapp.model.ParcelableMovie;
+import com.ddutra9.popularmoviesapp.model.Movie;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -19,20 +19,20 @@ import java.util.List;
  * Created by donato on 12/06/17.
  */
 
-public class MovieAdapter extends ArrayAdapter<ParcelableMovie> {
+public class MovieAdapter extends ArrayAdapter<Movie> {
 
     private static final String PREFIX_IMAGE_URL = "http://image.tmdb.org/t/p/w342//";
 
     public static final String TAG = MovieAdapter.class.getSimpleName();
 
-    public MovieAdapter(@NonNull Context context, List<ParcelableMovie> movies) {
+    public MovieAdapter(@NonNull Context context, List<Movie> movies) {
         super(context, 0, movies);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ParcelableMovie movie = getItem(position);
+        Movie movie = getItem(position);
         ViewHolder viewHolder;
 
         if (convertView == null) {

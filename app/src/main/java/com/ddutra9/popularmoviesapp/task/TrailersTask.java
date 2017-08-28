@@ -8,7 +8,7 @@ import android.util.Log;
 import com.ddutra9.popularmoviesapp.MoviesProcessor;
 import com.ddutra9.popularmoviesapp.R;
 import com.ddutra9.popularmoviesapp.interfaces.AsyncTaskDelegate;
-import com.ddutra9.popularmoviesapp.model.ParcelableMovie;
+import com.ddutra9.popularmoviesapp.model.Movie;
 
 import org.json.JSONException;
 
@@ -23,7 +23,7 @@ import java.net.URL;
  * Created by donato on 26/06/17.
  */
 
-public class TrailersTask extends AsyncTask<String, Void, ParcelableMovie[]> {
+public class TrailersTask extends AsyncTask<String, Void, Movie[]> {
     private final String THE_MOVIE_URL = "https://api.themoviedb.org/3/movie/";
     private final String TRAILER_URI = "trailers";
     private final String TAG = TrailersTask.class.getSimpleName();
@@ -37,7 +37,7 @@ public class TrailersTask extends AsyncTask<String, Void, ParcelableMovie[]> {
     }
 
     @Override
-    protected ParcelableMovie[] doInBackground(String... params) {
+    protected Movie[] doInBackground(String... params) {
 
         if (params.length == 0) {
             return null;
@@ -114,7 +114,7 @@ public class TrailersTask extends AsyncTask<String, Void, ParcelableMovie[]> {
 
 
     @Override
-    protected void onPostExecute(ParcelableMovie[] movies) {
+    protected void onPostExecute(Movie[] movies) {
         super.onPostExecute(movies);
         if(delegate != null)
             delegate.processFinish(movies);
