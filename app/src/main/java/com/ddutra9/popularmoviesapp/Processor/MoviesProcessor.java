@@ -1,4 +1,4 @@
-package com.ddutra9.popularmoviesapp;
+package com.ddutra9.popularmoviesapp.Processor;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -27,7 +27,7 @@ public class MoviesProcessor {
 
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-    public static Movie[] process(String input, Context context)throws JSONException {
+    public static void process(String input, Context context)throws JSONException {
         // These are the names of the JSON objects that need to be extracted.
         final String RESULTS = "results";
         final String TITLE = "title";
@@ -39,8 +39,6 @@ public class MoviesProcessor {
         JSONObject moviesJson = new JSONObject(input);
         JSONArray moviesArray = moviesJson.getJSONArray(RESULTS);
 
-        Movie[] movies = new Movie[moviesArray.length()];
-        Movie movie = null;
         Vector<ContentValues> cVVector = new Vector<ContentValues>(moviesArray.length());
 
         for (int i = 0; i < moviesArray.length(); i++) {
@@ -49,15 +47,13 @@ public class MoviesProcessor {
 
             Log.d(TAG, "moviesJson: " + movieJson.toString());
 
-            movie = new Movie();
+            Movie movie = new Movie();
 
             movie.setTitle(movieJson.optString(TITLE));
             movie.setOverview(movieJson.optString(OVERVIEW));
             movie.setVoteAverage(movieJson.optDouble(VOTE));
             movie.setReleaseDate(parseDateFromAPI(movieJson.optString(RELEASE_DATE)));
             movie.setPosterPath(movieJson.optString(IMAGE));
-
-            movies[i] = movie;
 
             ContentValues values = new ContentValues();
 
@@ -90,9 +86,17 @@ public class MoviesProcessor {
             cVVector.toArray(contentValues);
             context.getContentResolver().bulkInsert(MoviesContract.MovieEntry.CONTENT_URI, contentValues);
         }
-
-        return movies;
     }
+
+    public static Movie[] getMovies(Context context){
+        Cursor cursor = context.getContentResolver().query(
+                MoviesContract.MovieEntry.CONTENT_URI,
+                null,
+                MoviesContract.MovieEntry.COLUMN_TITLE + " = ?",
+                new String[]{movie.getTitle()},
+                null);
+    }
+
 
     private static Long parseDateFromAPI(String dtStr) {
 

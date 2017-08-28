@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.ddutra9.popularmoviesapp.MoviesProcessor;
+import com.ddutra9.popularmoviesapp.Processor.MoviesProcessor;
 import com.ddutra9.popularmoviesapp.R;
 import com.ddutra9.popularmoviesapp.interfaces.AsyncTaskDelegate;
 import com.ddutra9.popularmoviesapp.model.Movie;
@@ -101,7 +101,7 @@ public class MoviesTask extends AsyncTask<String, Void, Movie[]> {
         }
 
         try {
-            return MoviesProcessor.process(moviesJsonString, context);
+            MoviesProcessor.process(moviesJsonString, context);
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage(), e);
             e.printStackTrace();

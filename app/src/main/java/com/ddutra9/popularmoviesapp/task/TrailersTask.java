@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.ddutra9.popularmoviesapp.MoviesProcessor;
+import com.ddutra9.popularmoviesapp.Processor.MoviesProcessor;
 import com.ddutra9.popularmoviesapp.R;
 import com.ddutra9.popularmoviesapp.interfaces.AsyncTaskDelegate;
 import com.ddutra9.popularmoviesapp.model.Movie;
