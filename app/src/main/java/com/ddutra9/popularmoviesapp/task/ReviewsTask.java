@@ -102,12 +102,12 @@ public class ReviewsTask extends AsyncTask<String, Void, Movie[]> {
             }
         }
 
-        try {
-            return MoviesProcessor.process(moviesJsonString, context);
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage(), e);
-            e.printStackTrace();
-        }
+//        try {
+//            return MoviesProcessor.process(moviesJsonString, context);
+//        } catch (JSONException e) {
+//            Log.e(TAG, e.getMessage(), e);
+//            e.printStackTrace();
+//        }
 
         return null;
     }

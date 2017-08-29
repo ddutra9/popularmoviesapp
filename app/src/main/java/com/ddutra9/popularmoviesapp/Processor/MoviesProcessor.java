@@ -14,7 +14,9 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 import static com.ddutra9.popularmoviesapp.MovieAdapter.TAG;
@@ -27,7 +29,23 @@ public class MoviesProcessor {
 
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-    public static void process(String input, Context context)throws JSONException {
+    private static final String[] MOVIES_COLUMNS = {
+            MoviesContract.MovieEntry._ID,
+            MoviesContract.MovieEntry.COLUMN_TITLE,
+            MoviesContract.MovieEntry.COLUMN_OVERVIEW,
+            MoviesContract.MovieEntry.COLUMN_VOTE_AVERAGE,
+            MoviesContract.MovieEntry.COLUMN_RELEASE_DATE,
+            MoviesContract.MovieEntry.COLUMN_POSTER_PATH
+    };
+
+    static final int COLUMN_ID = 0;
+    static final int COLUMN_TITLE = 1;
+    static final int COLUMN_OVERVIEW = 2;
+    static final int COLUMN_VOTE_AVERAGE = 3;
+    static final int COLUMN_RELEASE_DATE = 4;
+    static final int COLUMN_POSTER_PATH = 5;
+
+    public static void process(String input, String orderBy, Context context)throws JSONException {
         // These are the names of the JSON objects that need to be extracted.
         final String RESULTS = "results";
         final String TITLE = "title";
@@ -62,6 +80,7 @@ public class MoviesProcessor {
             values.put(MoviesContract.MovieEntry.COLUMN_VOTE_AVERAGE, movie.getVoteAverage());
             values.put(MoviesContract.MovieEntry.COLUMN_RELEASE_DATE, movie.getReleaseDate());
             values.put(MoviesContract.MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
+            values.put(MoviesContract.MovieEntry.COLUMN_ORDER_BY, orderBy);
 
             Cursor cursor = context.getContentResolver().query(
                     MoviesContract.MovieEntry.CONTENT_URI,
@@ -88,13 +107,32 @@ public class MoviesProcessor {
         }
     }
 
-    public static Movie[] getMovies(Context context){
+    public static Movie[] getMovies(Context context, String orderBy){
         Cursor cursor = context.getContentResolver().query(
                 MoviesContract.MovieEntry.CONTENT_URI,
-                null,
-                MoviesContract.MovieEntry.COLUMN_TITLE + " = ?",
-                new String[]{movie.getTitle()},
+                MOVIES_COLUMNS,
+                MoviesContract.MovieEntry.COLUMN_ORDER_BY + " = ?",
+                new String[]{orderBy},
                 null);
+
+        List<Movie> movies = new ArrayList<>();
+        Movie movie = null;
+        while (cursor.moveToNext()){
+            movie = new Movie();
+
+            movie.setId(cursor.getLong(COLUMN_ID));
+            movie.setTitle(cursor.getString(COLUMN_TITLE));
+            movie.setVoteAverage(cursor.getDouble(COLUMN_VOTE_AVERAGE));
+            movie.setOverview(cursor.getString(COLUMN_OVERVIEW));
+            movie.setReleaseDate(cursor.getLong(COLUMN_RELEASE_DATE));
+            movie.setPosterPath(cursor.getString(COLUMN_POSTER_PATH));
+
+            movies.add(movie);
+        }
+
+        cursor.close();
+
+        return movies.toArray(new Movie[movies.size()]);
     }
 
 

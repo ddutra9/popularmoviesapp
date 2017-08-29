@@ -45,9 +45,9 @@ public class MoviesTask extends AsyncTask<String, Void, Movie[]> {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         String moviesJsonString = null;
+        final String QUERY_PARAM = params[0];
 
         try {
-            final String QUERY_PARAM = params[0];
             final String API_KEY = "api_key";
             final String LANGUAGE = "language";
 
@@ -86,7 +86,7 @@ public class MoviesTask extends AsyncTask<String, Void, Movie[]> {
 
         } catch (IOException e) {
             Log.e(TAG, "Error ", e);
-            return null;
+            return  MoviesProcessor.getMovies(context, QUERY_PARAM);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -101,13 +101,13 @@ public class MoviesTask extends AsyncTask<String, Void, Movie[]> {
         }
 
         try {
-            MoviesProcessor.process(moviesJsonString, context);
+            MoviesProcessor.process(moviesJsonString, QUERY_PARAM, context);
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage(), e);
             e.printStackTrace();
         }
 
-        return null;
+        return MoviesProcessor.getMovies(context, QUERY_PARAM);
     }
 
 

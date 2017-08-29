@@ -89,15 +89,16 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate 
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    private void updateMovies(){
+    private void updateMovies() {
         Log.d(TAG, "isOnline: " + isOnline());
-        if(isOnline()){
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String order = prefs.getString(getString(R.string.pref_order_key),
-                    getString(R.string.pref_order_popular));
 
-            new MoviesTask(getContext(), this).execute(new String[]{order});
-        } else {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String order = prefs.getString(getString(R.string.pref_order_key),
+                getString(R.string.pref_order_popular));
+
+        new MoviesTask(getContext(), this).execute(new String[]{order});
+
+        if (!isOnline()) {
             //Se não há conexão disponível, exibe a mensagem
             View view = getActivity().findViewById(R.id.activity_main);
             Snackbar snackbar = Snackbar.make(view, getString(R.string.no_internet_connected), Snackbar.LENGTH_INDEFINITE);
