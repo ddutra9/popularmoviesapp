@@ -34,37 +34,116 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/release_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="34sp"
                     android:text="2015"/>
 
                 <TextView
+                    android:id="@+id/duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="24sp"
                     android:text="120min"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="8,1/10"/>
             </LinearLayout>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/text_desc_movie"
-            android:paddingTop="@dimen/vertical_padding"
-            android:paddingBottom="@dimen/vertical_padding"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Por fim, você otimizará o fluxo completo da interação do usuário final, incluindo o que foi desenvolvido no estágio 1, e otimizá-lo para funcionar em tablets."/>
+            android:layout_height="wrap_content">
 
-        <ListView
-            android:id="@+id/list_trailer_videos"
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/fab_margin"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="?editTextBackground">
+
+                    <TextView
+                        android:paddingTop="@dimen/vertical_padding"
+                        android:paddingBottom="@dimen/vertical_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="32sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="Sinopse"/>
+
+                    <TextView
+                        android:id="@+id/vote_average"
+                        android:paddingTop="@dimen/vertical_padding"
+                        android:paddingBottom="@dimen/vertical_padding"
+                        android:layout_width="0"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="8,1/10"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+
+                <TextView
+                    android:id="@+id/text_desc_movie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/vertical_padding"
+                    android:text="Por fim, você otimizará o fluxo completo da interação do usuário final, incluindo o que foi desenvolvido no estágio 1, e otimizá-lo para funcionar em tablets."/>
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_marginTop="@dimen/fab_margin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></ListView>
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="?editTextBackground">
+
+                    <TextView
+                        android:paddingTop="@dimen/vertical_padding"
+                        android:paddingBottom="@dimen/vertical_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="32sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="Trailers"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    </android.support.v7.widget.RecyclerView>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+        </android.support.v7.widget.CardView>
+
 
     </LinearLayout>
 
