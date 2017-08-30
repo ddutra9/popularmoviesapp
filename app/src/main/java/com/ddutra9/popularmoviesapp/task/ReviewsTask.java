@@ -6,9 +6,12 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.ddutra9.popularmoviesapp.Processor.MoviesProcessor;
+import com.ddutra9.popularmoviesapp.Processor.ReviewsProcessor;
+import com.ddutra9.popularmoviesapp.Processor.TrailersProcessor;
 import com.ddutra9.popularmoviesapp.R;
 import com.ddutra9.popularmoviesapp.interfaces.AsyncTaskDelegate;
 import com.ddutra9.popularmoviesapp.model.Movie;
+import com.ddutra9.popularmoviesapp.model.Review;
 
 import org.json.JSONException;
 
@@ -23,7 +26,7 @@ import java.net.URL;
  * Created by donato on 26/06/17.
  */
 
-public class ReviewsTask extends AsyncTask<String, Void, Movie[]> {
+public class ReviewsTask extends AsyncTask<String, Void, Review[]> {
     private final String THE_MOVIE_URL = "https://api.themoviedb.org/3/movie/";
     private final String REVIEW_URI = "reviews";
     private final String TAG = ReviewsTask.class.getSimpleName();
@@ -37,7 +40,7 @@ public class ReviewsTask extends AsyncTask<String, Void, Movie[]> {
     }
 
     @Override
-    protected Movie[] doInBackground(String... params) {
+    protected Review[] doInBackground(String... params) {
 
         if (params.length == 0) {
             return null;
@@ -45,15 +48,15 @@ public class ReviewsTask extends AsyncTask<String, Void, Movie[]> {
 
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
-        String moviesJsonString = null;
+        String reviewsJsonString = null;
+        final String MOVIE_ID = params[0];
 
         try {
-            final String QUERY_PARAM = params[0];
             final String API_KEY = "api_key";
             final String LANGUAGE = "language";
 
             Uri builtUri = Uri.parse(THE_MOVIE_URL).buildUpon()
-                    .appendPath(QUERY_PARAM)
+                    .appendPath(MOVIE_ID)
                     .appendPath(REVIEW_URI)
                     .appendQueryParameter(API_KEY, context.getString(R.string.API_MOVIE_KEY))
                     .appendQueryParameter(LANGUAGE, "pt-BR")
@@ -61,7 +64,6 @@ public class ReviewsTask extends AsyncTask<String, Void, Movie[]> {
 
             Log.d(TAG, "url: " + builtUri.toString());
             URL url = new URL(builtUri.toString());
-
 
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
@@ -83,12 +85,12 @@ public class ReviewsTask extends AsyncTask<String, Void, Movie[]> {
                 return null;
             }
 
-            moviesJsonString = buffer.toString();
-            Log.d(TAG, moviesJsonString);
+            reviewsJsonString = buffer.toString();
+            Log.d(TAG, reviewsJsonString);
 
         } catch (IOException e) {
             Log.e(TAG, "Error ", e);
-            return null;
+            return ReviewsProcessor.getReviews(context, Long.parseLong(MOVIE_ID), "pt-BR");
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -102,21 +104,21 @@ public class ReviewsTask extends AsyncTask<String, Void, Movie[]> {
             }
         }
 
-//        try {
-//            return MoviesProcessor.process(moviesJsonString, context);
-//        } catch (JSONException e) {
-//            Log.e(TAG, e.getMessage(), e);
-//            e.printStackTrace();
-//        }
+        try {
+            ReviewsProcessor.process(reviewsJsonString, Long.parseLong(MOVIE_ID), "pt-BR", context);
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage(), e);
+            e.printStackTrace();
+        }
 
-        return null;
+        return ReviewsProcessor.getReviews(context, Long.parseLong(MOVIE_ID), "pt-BR");
     }
 
 
     @Override
-    protected void onPostExecute(Movie[] movies) {
-        super.onPostExecute(movies);
+    protected void onPostExecute(Review[] reviews) {
+        super.onPostExecute(reviews);
         if(delegate != null)
-            delegate.processFinish(movies);
+            delegate.processFinish(reviews);
     }
 }

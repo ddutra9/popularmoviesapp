@@ -65,28 +65,20 @@ public class MoviesProcessor {
 
             Log.d(TAG, "moviesJson: " + movieJson.toString());
 
-            Movie movie = new Movie();
-
-            movie.setTitle(movieJson.optString(TITLE));
-            movie.setOverview(movieJson.optString(OVERVIEW));
-            movie.setVoteAverage(movieJson.optDouble(VOTE));
-            movie.setReleaseDate(parseDateFromAPI(movieJson.optString(RELEASE_DATE)));
-            movie.setPosterPath(movieJson.optString(IMAGE));
-
             ContentValues values = new ContentValues();
 
-            values.put(MoviesContract.MovieEntry.COLUMN_TITLE, movie.getTitle());
-            values.put(MoviesContract.MovieEntry.COLUMN_OVERVIEW, movie.getOverview());
-            values.put(MoviesContract.MovieEntry.COLUMN_VOTE_AVERAGE, movie.getVoteAverage());
-            values.put(MoviesContract.MovieEntry.COLUMN_RELEASE_DATE, movie.getReleaseDate());
-            values.put(MoviesContract.MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
+            values.put(MoviesContract.MovieEntry.COLUMN_TITLE, movieJson.optString(TITLE));
+            values.put(MoviesContract.MovieEntry.COLUMN_OVERVIEW, movieJson.optString(OVERVIEW));
+            values.put(MoviesContract.MovieEntry.COLUMN_VOTE_AVERAGE, movieJson.optDouble(VOTE));
+            values.put(MoviesContract.MovieEntry.COLUMN_RELEASE_DATE, parseDateFromAPI(movieJson.optString(RELEASE_DATE)));
+            values.put(MoviesContract.MovieEntry.COLUMN_POSTER_PATH, movieJson.optString(IMAGE));
             values.put(MoviesContract.MovieEntry.COLUMN_ORDER_BY, orderBy);
 
             Cursor cursor = context.getContentResolver().query(
                     MoviesContract.MovieEntry.CONTENT_URI,
                     new String[]{MoviesContract.MovieEntry._ID},
                     MoviesContract.MovieEntry.COLUMN_TITLE + " = ?",
-                    new String[]{movie.getTitle()},
+                    new String[]{movieJson.optString(TITLE)},
                     null);
 
             if(cursor.moveToNext()){
