@@ -79,7 +79,7 @@
                         android:id="@+id/vote_average"
                         android:paddingTop="@dimen/vertical_padding"
                         android:paddingBottom="@dimen/vertical_padding"
-                        android:layout_width="0"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:gravity="right"
