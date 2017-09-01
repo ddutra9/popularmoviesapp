@@ -1,6 +1,8 @@
 package com.ddutra9.popularmoviesapp;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,13 +39,15 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(TrailerAdapter.ViewHolder holder, int position) {
-        Trailer trailer = dataList.get(position);
+        final Trailer trailer = dataList.get(position);
 
-        Picasso.with(mContext).load(PREFIX_IMAGE_URL + movie.getPosterPath()).into(holder.youtubeImage);
+        Picasso.with(mContext).load(mContext.getString(R.string.youtube_prefix, trailer.getSource())).into(holder.youtubeImage);
         holder.youtubeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent youTubeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mContext.getString(R.string.youtube_video_url) + trailer.getSource()));
+                youTubeIntent.putExtra("force_fullscreen", true);
+                mContext.startActivity(youTubeIntent);
             }
         });
     }

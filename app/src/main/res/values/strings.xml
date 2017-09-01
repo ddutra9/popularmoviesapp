@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Popular Movies App</string>
     <string name="action_settings">Configurações</string>
     <string name="pref_order_movies">Ordenar por</string>
@@ -11,5 +11,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="content_authority">com.ddutra9.popularmoviesapp</string>
-    <string name="youtube_prefix">http://img.youtube.com/vi/%s/default.jpg</string>
+
+    <string name="youtube_prefix">http://img.youtube.com/vi/<xliff:g id="youtube_source">%1$s</xliff:g>/default.jpg</string>
+    <string name="youtube_video_url">http://www.youtube.com/watch?v=</string>
 </resources>
