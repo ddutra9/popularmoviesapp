@@ -8,4 +8,11 @@
         android:entryValues="@array/pref_order_values"
         android:entries="@array/pref_order_options" />
 
+    <CheckBoxPreference
+        android:title="@string/pref_enable_favorite"
+        android:key="@string/pref_enable_favorite_key"
+        android:summaryOff="@string/pref_enable_favorite_false"
+        android:summaryOn="@string/pref_enable_favorite_true"
+        android:defaultValue="@string/pref_enable_favorite_default" />
+
 </PreferenceScreen>

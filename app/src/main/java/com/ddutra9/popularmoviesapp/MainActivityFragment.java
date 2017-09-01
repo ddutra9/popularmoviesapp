@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.ddutra9.popularmoviesapp.Processor.MoviesProcessor;
 import com.ddutra9.popularmoviesapp.interfaces.AsyncTaskDelegate;
 import com.ddutra9.popularmoviesapp.model.Movie;
 import com.ddutra9.popularmoviesapp.task.MoviesTask;
@@ -93,22 +94,30 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate 
         Log.d(TAG, "isOnline: " + isOnline());
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String order = prefs.getString(getString(R.string.pref_order_key),
-                getString(R.string.pref_order_popular));
 
-        new MoviesTask(getContext(), this).execute(new String[]{order});
+        if(prefs.getBoolean(getString(R.string.pref_enable_favorite_key), false)){
+            Movie[] movies = MoviesProcessor.getFavorites(getContext());
 
-        if (!isOnline()) {
-            //Se não há conexão disponível, exibe a mensagem
-            View view = getActivity().findViewById(R.id.activity_main);
-            Snackbar snackbar = Snackbar.make(view, getString(R.string.no_internet_connected), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(getString(R.string.retry), new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    updateMovies();
-                }
-            });
-            snackbar.show();
+            adapter.clear();
+            adapter.addAll(movies);
+        } else {
+            String order = prefs.getString(getString(R.string.pref_order_key),
+                    getString(R.string.pref_order_popular));
+
+            new MoviesTask(getContext(), this).execute(new String[]{order});
+
+            if (!isOnline()) {
+                //Se não há conexão disponível, exibe a mensagem
+                View view = getActivity().findViewById(R.id.activity_main);
+                Snackbar snackbar = Snackbar.make(view, getString(R.string.no_internet_connected), Snackbar.LENGTH_INDEFINITE);
+                snackbar.setAction(getString(R.string.retry), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        updateMovies();
+                    }
+                });
+                snackbar.show();
+            }
         }
     }
 

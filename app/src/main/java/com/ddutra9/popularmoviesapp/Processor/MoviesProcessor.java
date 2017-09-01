@@ -113,6 +113,21 @@ public class MoviesProcessor {
                 new String[]{orderBy},
                 null);
 
+        return populateMovies(cursor);
+    }
+
+    public static Movie[] getFavorites(Context context){
+        Cursor cursor = context.getContentResolver().query(
+                MoviesContract.MovieEntry.CONTENT_URI,
+                MOVIES_COLUMNS,
+                MoviesContract.MovieEntry.COLUMN_IS_FAVORITE + " = ?",
+                new String[]{"1"},
+                null);
+
+       return populateMovies(cursor);
+    }
+
+    private static Movie[] populateMovies(Cursor cursor){
         List<Movie> movies = new ArrayList<>();
         Movie movie = null;
         while (cursor.moveToNext()){

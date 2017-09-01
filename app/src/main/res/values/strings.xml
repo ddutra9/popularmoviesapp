@@ -3,6 +3,7 @@
     <string name="action_settings">Configurações</string>
     <string name="pref_order_movies">Ordenar por</string>
     <string name="pref_order_key" translatable="false">order</string>
+
     <string name="title_activity_settings">Configurações</string>
     <string name="no_internet_connected">Sem acesso a internet!</string>
     <string name="retry">Tentar novamente!</string>
@@ -18,4 +19,9 @@
     <string name="trailers">Trailers</string>
     <string name="synopsis">Sinopse</string>
     <string name="mark_favorite">Marcar como favorito</string>
+    <string name="pref_enable_favorite">Buscar somente favoritos</string>
+    <string name="pref_enable_favorite_key" translatable="false">enable_favorite</string>
+    <string name="pref_enable_favorite_false">Não ativado</string>
+    <string name="pref_enable_favorite_true">Ativado</string>
+    <string name="pref_enable_favorite_default">Não ativado</string>
 </resources>
