@@ -6,23 +6,13 @@
     android:orientation="vertical"
     android:layout_margin="@dimen/fab_margin">
 
-    <android.support.v7.widget.LinearLayoutCompat
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/author_tv"
+        android:paddingTop="@dimen/vertical_padding"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="?editTextBackground">
-
-        <TextView
-            android:id="@+id/author_tv"
-            android:paddingTop="@dimen/vertical_padding"
-            android:paddingBottom="@dimen/vertical_padding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="32sp"
-            android:textColor="@color/colorPrimaryDark"/>
-
-    </android.support.v7.widget.LinearLayoutCompat>
+        android:textSize="24sp"
+        android:textColor="@color/colorPrimaryDark"/>
 
     <TextView
         android:id="@+id/reviews_tv"

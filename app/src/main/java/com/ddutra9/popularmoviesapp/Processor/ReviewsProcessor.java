@@ -64,7 +64,7 @@ public class ReviewsProcessor {
 
             Cursor cursor = context.getContentResolver().query(
                     MoviesContract.ReviewEntry.CONTENT_URI,
-                    new String[]{MoviesContract.ReviewEntry._ID},
+                    new String[]{MoviesContract.ReviewEntry.TABLE_NAME + "." + MoviesContract.ReviewEntry._ID},
                     MoviesContract.ReviewEntry.COLUMN_AUTHOR + " = ? AND " +
                     MoviesContract.ReviewEntry.COLUMN_LANGUAGE + " = ?",
                     new String[]{movieJson.optString(AUTHOR), language},

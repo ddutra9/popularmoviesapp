@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal"
+            android:gravity="left|center_vertical"
             android:layout_marginTop="@dimen/vertical_padding"
             android:layout_marginBottom="@dimen/vertical_padding"
             android:orientation="horizontal">
@@ -39,6 +39,13 @@
                     android:layout_height="wrap_content"
                     android:textSize="34sp"
                     android:text="2015"/>
+
+                <ImageButton
+                    android:id="@+id/mark_favorite_ib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/mark_favorite"
+                    android:background="@null"/>
 
             </LinearLayout>
 

@@ -17,4 +17,5 @@
     <string name="reviews">Comentários</string>
     <string name="trailers">Trailers</string>
     <string name="synopsis">Sinopse</string>
+    <string name="mark_favorite">Marcar como favorito</string>
 </resources>

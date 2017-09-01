@@ -36,7 +36,8 @@ public class MoviesProcessor {
             MoviesContract.MovieEntry.COLUMN_VOTE_AVERAGE,
             MoviesContract.MovieEntry.COLUMN_RELEASE_DATE,
             MoviesContract.MovieEntry.COLUMN_POSTER_PATH,
-            MoviesContract.MovieEntry.COLUMN_MOVIE_API_ID
+            MoviesContract.MovieEntry.COLUMN_MOVIE_API_ID,
+            MoviesContract.MovieEntry.COLUMN_IS_FAVORITE
     };
 
     static final int COLUMN_ID = 0;
@@ -46,6 +47,7 @@ public class MoviesProcessor {
     static final int COLUMN_RELEASE_DATE = 4;
     static final int COLUMN_POSTER_PATH = 5;
     static final int COLUMN_MOVIE_API_ID = 6;
+    static final int COLUMN_IS_FAVORITE = 7;
 
     public static void process(String input, String orderBy, Context context)throws JSONException {
         // These are the names of the JSON objects that need to be extracted.
@@ -123,6 +125,7 @@ public class MoviesProcessor {
             movie.setReleaseDate(cursor.getLong(COLUMN_RELEASE_DATE));
             movie.setPosterPath(cursor.getString(COLUMN_POSTER_PATH));
             movie.setMovieAPIId(cursor.getLong(COLUMN_MOVIE_API_ID));
+            movie.setIsFavorite(cursor.getInt(COLUMN_IS_FAVORITE));
 
             movies.add(movie);
         }
