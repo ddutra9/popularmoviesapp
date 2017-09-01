@@ -45,11 +45,36 @@ public class MoviesProvider extends ContentProvider {
         );
     }
 
+    private Cursor getReview(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+
+        return sReviewByMovieQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+    }
+
+    private Cursor getTrailer(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+
+        return sTrailerByMovieQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+    }
+
     private static final SQLiteQueryBuilder sReviewByMovieQueryBuilder;
 
     private static final String sReviewMovieSelection =
             MoviesContract.MovieEntry.TABLE_NAME+
-                    "." + MoviesContract.MovieEntry._ID + " = ? ";
+                    "." + MoviesContract.MovieEntry._ID + " = ? AND " +
+                    MoviesContract.ReviewEntry.COLUMN_LANGUAGE + " = ?";
 
     static{
         sReviewByMovieQueryBuilder = new SQLiteQueryBuilder();
@@ -65,7 +90,7 @@ public class MoviesProvider extends ContentProvider {
     private Cursor getReviewByMovie(Uri uri, String[] projection, String sortOrder) {
         String movieId = MoviesContract.ReviewEntry.getMovieIdFromUri(uri);
 
-        String[] selectionArgs = new String[]{movieId};
+        String[] selectionArgs = new String[]{movieId, "pt-BR"};
         String selection = sReviewMovieSelection;
 
         return sReviewByMovieQueryBuilder.query(mOpenHelper.getReadableDatabase(),
@@ -82,13 +107,14 @@ public class MoviesProvider extends ContentProvider {
 
     private static final String sTrailerMovieSelection =
             MoviesContract.MovieEntry.TABLE_NAME+
-                    "." + MoviesContract.MovieEntry._ID + " = ? ";
+                    "." + MoviesContract.MovieEntry._ID + " = ? AND " +
+                    MoviesContract.TrailerEntry.COLUMN_LANGUAGE + " = ?";
 
     static{
         sTrailerByMovieQueryBuilder = new SQLiteQueryBuilder();
         sTrailerByMovieQueryBuilder.setTables(
                 MoviesContract.MovieEntry.TABLE_NAME + " INNER JOIN " +
-                        MoviesContract.ReviewEntry.TABLE_NAME +
+                        MoviesContract.TrailerEntry.TABLE_NAME +
                         " ON " + MoviesContract.MovieEntry.TABLE_NAME +
                         "." + MoviesContract.MovieEntry._ID +
                         " = " + MoviesContract.TrailerEntry.TABLE_NAME +
@@ -98,7 +124,7 @@ public class MoviesProvider extends ContentProvider {
     private Cursor getTrailerByMovie(Uri uri, String[] projection, String sortOrder) {
         String movieId = MoviesContract.TrailerEntry.getMovieIdFromUri(uri);
 
-        String[] selectionArgs = new String[]{movieId};
+        String[] selectionArgs = new String[]{movieId, "pt-BR"};
         String selection = sTrailerMovieSelection;
 
         return sTrailerByMovieQueryBuilder.query(mOpenHelper.getReadableDatabase(),
@@ -140,8 +166,16 @@ public class MoviesProvider extends ContentProvider {
                 retCursor = getMovie(projection, selection, selectionArgs, sortOrder);
                 break;
             }
+            case REVIEW: {
+                retCursor = getReview(projection, selection, selectionArgs, sortOrder);
+                break;
+            }
             case REVIEW_WITH_MOVIE: {
                 retCursor = getReviewByMovie(uri, projection, sortOrder);
+                break;
+            }
+            case TRAILER: {
+                retCursor = getTrailer(projection, selection, selectionArgs, sortOrder);
                 break;
             }
             case TRAILER_WITH_MOVIE: {
@@ -286,7 +320,7 @@ public class MoviesProvider extends ContentProvider {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         switch (match) {
-            case MOVIE:
+            case MOVIE: {
                 db.beginTransaction();
                 int returnCount = 0;
 
@@ -304,6 +338,45 @@ public class MoviesProvider extends ContentProvider {
 
                 getContext().getContentResolver().notifyChange(uri, null);
                 return returnCount;
+            }
+            case TRAILER: {
+                db.beginTransaction();
+                int returnCount = 0;
+
+                try {
+                    for (ContentValues value : values) {
+                        long _id = db.insert(MoviesContract.TrailerEntry.TABLE_NAME, null, value);
+                        if (_id != -1) {
+                            returnCount++;
+                        }
+                    }
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
+                }
+
+                getContext().getContentResolver().notifyChange(uri, null);
+                return returnCount;
+            }
+            case REVIEW: {
+                db.beginTransaction();
+                int returnCount = 0;
+
+                try {
+                    for (ContentValues value : values) {
+                        long _id = db.insert(MoviesContract.ReviewEntry.TABLE_NAME, null, value);
+                        if (_id != -1) {
+                            returnCount++;
+                        }
+                    }
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
+                }
+
+                getContext().getContentResolver().notifyChange(uri, null);
+                return returnCount;
+            }
             default:
                 return super.bulkInsert(uri, values);
         }

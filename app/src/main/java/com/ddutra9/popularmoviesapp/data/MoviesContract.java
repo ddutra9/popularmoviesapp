@@ -22,6 +22,7 @@ public class MoviesContract {
     public static final class MovieEntry implements BaseColumns {
         public static final String TABLE_NAME = "movie";
 
+        public static final String COLUMN_MOVIE_API_ID = "movie_api_id";
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_OVERVIEW = "overview";
         public static final String COLUMN_VOTE_AVERAGE = "vote_average";
@@ -60,10 +61,6 @@ public class MoviesContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildTrailerMovie(String movie) {
-            return CONTENT_URI.buildUpon().appendPath(movie).build();
-        }
-
         public static String getMovieIdFromUri(Uri uri) {
             return uri.getPathSegments().get(1);
         }
@@ -87,10 +84,6 @@ public class MoviesContract {
 
         public static Uri buildReviewUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
-        }
-
-        public static Uri buildReviewMovie(String movie) {
-            return CONTENT_URI.buildUpon().appendPath(movie).build();
         }
 
         public static String getMovieIdFromUri(Uri uri) {

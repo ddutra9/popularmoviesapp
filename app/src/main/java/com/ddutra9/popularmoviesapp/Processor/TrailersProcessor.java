@@ -66,7 +66,7 @@ public class TrailersProcessor {
 
             Cursor cursor = context.getContentResolver().query(
                     MoviesContract.TrailerEntry.CONTENT_URI,
-                    new String[]{MoviesContract.TrailerEntry._ID},
+                    new String[]{MoviesContract.TrailerEntry.TABLE_NAME + "." + MoviesContract.TrailerEntry._ID},
                     MoviesContract.TrailerEntry.COLUMN_NAME + " = ? AND " +
                     MoviesContract.TrailerEntry.COLUMN_LANGUAGE + " = ?",
                     new String[]{movieJson.optString(NAME), language},
@@ -90,13 +90,12 @@ public class TrailersProcessor {
         }
     }
 
-    public static Trailer[] getTrailers(Context context, Long movieId, String language){
+    public static Trailer[] getTrailers(Context context, Long movieId){
         Cursor cursor = context.getContentResolver().query(
-                MoviesContract.TrailerEntry.CONTENT_URI,
+                MoviesContract.TrailerEntry.buildTrailerUri(movieId),
                 TRAILERS_COLUMNS,
-                MoviesContract.TrailerEntry.COLUMN_MOVIE_ID + " = ? AND " +
-                MoviesContract.TrailerEntry.COLUMN_LANGUAGE + " = ?",
-                new String[]{String.valueOf(movieId), language},
+                null,
+                new String[]{String.valueOf(movieId)},
                 null);
 
         List<Trailer> trailers = new ArrayList<>();

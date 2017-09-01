@@ -10,6 +10,7 @@ import android.os.Parcelable;
 public class Movie implements Parcelable {
 
     private Long id;
+    private Long movieAPIId;
     private String title;
     private String overview;
     private Double voteAverage;
@@ -21,6 +22,7 @@ public class Movie implements Parcelable {
 
     protected Movie(Parcel in) {
         setId(in.readLong());
+        setMovieAPIId(in.readLong());
         setTitle(in.readString());
         setOverview(in.readString());
         setPosterPath(in.readString());
@@ -48,6 +50,7 @@ public class Movie implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(getId());
+        dest.writeLong(getMovieAPIId());
         dest.writeString(getTitle());
         dest.writeString(getOverview());
         dest.writeString(getPosterPath());
@@ -101,5 +104,13 @@ public class Movie implements Parcelable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getMovieAPIId() {
+        return movieAPIId;
+    }
+
+    public void setMovieAPIId(Long movieAPIId) {
+        this.movieAPIId = movieAPIId;
     }
 }

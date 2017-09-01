@@ -88,13 +88,12 @@ public class ReviewsProcessor {
         }
     }
 
-    public static Review[] getReviews(Context context, Long movieId, String language){
+    public static Review[] getReviews(Context context, Long movieId){
         Cursor cursor = context.getContentResolver().query(
-                MoviesContract.ReviewEntry.CONTENT_URI,
+                MoviesContract.ReviewEntry.buildReviewUri(movieId),
                 REVIEWS_COLUMNS,
-                MoviesContract.ReviewEntry.COLUMN_MOVIE_ID + " = ? AND " +
-                MoviesContract.ReviewEntry.COLUMN_LANGUAGE + " = ?",
-                new String[]{String.valueOf(movieId), language},
+                null,
+                null,
                 null);
 
         List<Review> reviews = new ArrayList<>();

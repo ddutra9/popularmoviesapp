@@ -41,21 +41,22 @@ public class TrailersTask extends AsyncTask<String, Void, Trailer[]> {
     @Override
     protected Trailer[] doInBackground(String... params) {
 
-        if (params.length == 0 || params[0].isEmpty()) {
+        if (params.length < 1 || params[0].isEmpty()) {
             return null;
         }
 
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         String trailersJsonString = null;
-        final String MOVIE_ID = params[0];
+        final String MOVIE_API_ID = params[0];
+        final String MOVIE_ID = params[1];
 
         try {
             final String API_KEY = "api_key";
             final String LANGUAGE = "language";
 
             Uri builtUri = Uri.parse(THE_MOVIE_URL).buildUpon()
-                    .appendPath(MOVIE_ID)
+                    .appendPath(MOVIE_API_ID)
                     .appendPath(TRAILER_URI)
                     .appendQueryParameter(API_KEY, context.getString(R.string.API_MOVIE_KEY))
                     .appendQueryParameter(LANGUAGE, "pt-BR")
@@ -89,7 +90,7 @@ public class TrailersTask extends AsyncTask<String, Void, Trailer[]> {
 
         } catch (IOException e) {
             Log.e(TAG, "Error ", e);
-            return TrailersProcessor.getTrailers(context, Long.parseLong(MOVIE_ID), "pt-BR");
+            return TrailersProcessor.getTrailers(context, Long.parseLong(MOVIE_ID));
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -110,7 +111,7 @@ public class TrailersTask extends AsyncTask<String, Void, Trailer[]> {
             e.printStackTrace();
         }
 
-        return TrailersProcessor.getTrailers(context, Long.parseLong(MOVIE_ID), "pt-BR");
+        return TrailersProcessor.getTrailers(context, Long.parseLong(MOVIE_ID));
     }
 
 

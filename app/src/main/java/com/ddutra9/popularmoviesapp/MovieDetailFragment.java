@@ -66,8 +66,10 @@ public class MovieDetailFragment extends Fragment implements AsyncTaskDelegate {
         TextView descMovieTV = (TextView) view.findViewById(R.id.text_desc_movie);
         TextView releaseYearTV = (TextView) view.findViewById(R.id.release_year);
 
-        new TrailersTask(getContext(), this).execute(new String[]{""});
-        new ReviewsTask(getContext(), this).execute(new String[]{""});
+        String[] paramsTask = new String[]{String.valueOf(movie.getMovieAPIId()),
+                String.valueOf(movie.getId())};
+        new TrailersTask(getContext(), this).execute(paramsTask);
+        new ReviewsTask(getContext(), this).execute(paramsTask);
 
         youtubeTrailersRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         reviewsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));

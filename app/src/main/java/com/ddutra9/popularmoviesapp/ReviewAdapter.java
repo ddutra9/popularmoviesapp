@@ -32,7 +32,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     @Override
     public ReviewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_movie, null);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_review, null);
         ReviewAdapter.ViewHolder vh = new ViewHolder(v);
         return vh;
     }

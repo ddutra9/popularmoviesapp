@@ -35,7 +35,8 @@ public class MoviesProcessor {
             MoviesContract.MovieEntry.COLUMN_OVERVIEW,
             MoviesContract.MovieEntry.COLUMN_VOTE_AVERAGE,
             MoviesContract.MovieEntry.COLUMN_RELEASE_DATE,
-            MoviesContract.MovieEntry.COLUMN_POSTER_PATH
+            MoviesContract.MovieEntry.COLUMN_POSTER_PATH,
+            MoviesContract.MovieEntry.COLUMN_MOVIE_API_ID
     };
 
     static final int COLUMN_ID = 0;
@@ -44,6 +45,7 @@ public class MoviesProcessor {
     static final int COLUMN_VOTE_AVERAGE = 3;
     static final int COLUMN_RELEASE_DATE = 4;
     static final int COLUMN_POSTER_PATH = 5;
+    static final int COLUMN_MOVIE_API_ID = 6;
 
     public static void process(String input, String orderBy, Context context)throws JSONException {
         // These are the names of the JSON objects that need to be extracted.
@@ -53,6 +55,7 @@ public class MoviesProcessor {
         final String VOTE = "vote_average";
         final String RELEASE_DATE = "release_date";
         final String IMAGE = "poster_path";
+        final String MOVIE_ID = "id";
 
         JSONObject moviesJson = new JSONObject(input);
         JSONArray moviesArray = moviesJson.getJSONArray(RESULTS);
@@ -72,6 +75,7 @@ public class MoviesProcessor {
             values.put(MoviesContract.MovieEntry.COLUMN_VOTE_AVERAGE, movieJson.optDouble(VOTE));
             values.put(MoviesContract.MovieEntry.COLUMN_RELEASE_DATE, parseDateFromAPI(movieJson.optString(RELEASE_DATE)));
             values.put(MoviesContract.MovieEntry.COLUMN_POSTER_PATH, movieJson.optString(IMAGE));
+            values.put(MoviesContract.MovieEntry.COLUMN_MOVIE_API_ID, movieJson.optLong(MOVIE_ID));
             values.put(MoviesContract.MovieEntry.COLUMN_ORDER_BY, orderBy);
 
             Cursor cursor = context.getContentResolver().query(
@@ -118,6 +122,7 @@ public class MoviesProcessor {
             movie.setOverview(cursor.getString(COLUMN_OVERVIEW));
             movie.setReleaseDate(cursor.getLong(COLUMN_RELEASE_DATE));
             movie.setPosterPath(cursor.getString(COLUMN_POSTER_PATH));
+            movie.setMovieAPIId(cursor.getLong(COLUMN_MOVIE_API_ID));
 
             movies.add(movie);
         }
