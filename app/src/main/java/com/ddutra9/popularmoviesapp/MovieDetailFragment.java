@@ -17,6 +17,7 @@ import com.ddutra9.popularmoviesapp.interfaces.AsyncTaskDelegate;
 import com.ddutra9.popularmoviesapp.model.Movie;
 import com.ddutra9.popularmoviesapp.model.Review;
 import com.ddutra9.popularmoviesapp.model.Trailer;
+import com.ddutra9.popularmoviesapp.task.ReviewsTask;
 import com.ddutra9.popularmoviesapp.task.TrailersTask;
 import com.squareup.picasso.Picasso;
 
@@ -25,7 +26,7 @@ import java.util.Arrays;
 
 public class MovieDetailFragment extends Fragment implements AsyncTaskDelegate {
 
-    private RecyclerView youtubeTrailersRV;
+    private RecyclerView youtubeTrailersRV, reviewsRV;
     private Movie movie;
 
     @Override
@@ -57,17 +58,21 @@ public class MovieDetailFragment extends Fragment implements AsyncTaskDelegate {
         }
 
         youtubeTrailersRV = (RecyclerView) view.findViewById(R.id.youtube_trailers_rv);
+        reviewsRV = (RecyclerView) view.findViewById(R.id.reviews_rv);
         ImageView movieIcon = (ImageView) view.findViewById(R.id.movie_icon);
         TextView voteAverageTV = (TextView) view.findViewById(R.id.vote_average);
         TextView descMovieTV = (TextView) view.findViewById(R.id.text_desc_movie);
 
         new TrailersTask(getContext(), this).execute(new String[]{""});
-        LinearLayoutManager horizontalLM = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        youtubeTrailersRV.setLayoutManager(horizontalLM);
+        new ReviewsTask(getContext(), this).execute(new String[]{""});
+
+        youtubeTrailersRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        reviewsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         Picasso.with(getContext()).load(MovieAdapter.PREFIX_IMAGE_URL + movie.getPosterPath()).into(movieIcon);
 
         voteAverageTV.setText(movie.getVoteAverage() + "/10");
+        descMovieTV.setText(movie.getOverview());
     }
 
     @Override
@@ -88,8 +93,8 @@ public class MovieDetailFragment extends Fragment implements AsyncTaskDelegate {
         if(output != null && output instanceof Review[]){
             Review[] reviews = (Review[]) output;
 
-//            adapter.clear();
-//            adapter.addAll(movies);
+            ReviewAdapter reviewAdapter = new ReviewAdapter(getActivity(), Arrays.asList(reviews));
+            reviewsRV.setAdapter(reviewAdapter);
         }
     }
 }

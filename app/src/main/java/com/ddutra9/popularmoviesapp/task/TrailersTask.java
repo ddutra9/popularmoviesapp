@@ -41,7 +41,7 @@ public class TrailersTask extends AsyncTask<String, Void, Trailer[]> {
     @Override
     protected Trailer[] doInBackground(String... params) {
 
-        if (params.length == 0) {
+        if (params.length == 0 || params[0].isEmpty()) {
             return null;
         }
 

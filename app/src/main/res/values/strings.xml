@@ -14,4 +14,7 @@
 
     <string name="youtube_prefix">http://img.youtube.com/vi/<xliff:g id="youtube_source">%1$s</xliff:g>/default.jpg</string>
     <string name="youtube_video_url">http://www.youtube.com/watch?v=</string>
+    <string name="reviews">Comentários</string>
+    <string name="trailers">Trailers</string>
+    <string name="synopsis">Sinopse</string>
 </resources>
