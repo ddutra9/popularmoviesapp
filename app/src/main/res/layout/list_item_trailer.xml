@@ -5,10 +5,10 @@
     android:padding="1dp">
 
     <ImageView
+        android:id="@+id/trailer_image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_play_circle_filled_black_24dp" />
+        android:scaleType="centerCrop" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -16,8 +16,10 @@
         android:layout_gravity="center">
 
         <ImageView
-            android:id="@+id/trailer_image_view"
-            style="@style/TrailerPlayImage"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_play_circle_filled_black_24dp"/>
 
     </FrameLayout>
 </FrameLayout>

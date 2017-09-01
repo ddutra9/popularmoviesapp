@@ -5,9 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ddutra9.popularmoviesapp.model.Trailer;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -34,32 +37,29 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(TrailerAdapter.ViewHolder holder, int position) {
+        Trailer trailer = dataList.get(position);
 
+        Picasso.with(mContext).load(PREFIX_IMAGE_URL + movie.getPosterPath()).into(holder.youtubeImage);
+        holder.youtubeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return !dataList.isEmpty() ? dataList.size() : 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        protected TextView itemTitle;
+        protected ImageView youtubeImage;
 
-        protected RecyclerView recycler_view_list;
-
-        protected Button btnMore;
-
-
-
-        public ItemRowHolder(View view) {
+        public ViewHolder(View view) {
             super(view);
-
-            this.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
-            this.recycler_view_list = (RecyclerView) view.findViewById(R.id.recycler_view_list);
-            this.btnMore= (Button) view.findViewById(R.id.btnMore);
-
-
+            this.youtubeImage = (ImageView) view.findViewById(R.id.trailer_image_view);
         }
     }
 }
