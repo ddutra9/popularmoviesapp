@@ -21,7 +21,7 @@ import java.util.List;
 
 public class MovieAdapter extends ArrayAdapter<Movie> {
 
-    private static final String PREFIX_IMAGE_URL = "http://image.tmdb.org/t/p/w342//";
+    public static final String PREFIX_IMAGE_URL = "http://image.tmdb.org/t/p/w342//";
 
     public static final String TAG = MovieAdapter.class.getSimpleName();
 

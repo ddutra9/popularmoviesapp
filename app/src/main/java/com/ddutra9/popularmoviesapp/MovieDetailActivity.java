@@ -11,6 +11,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
+        Bundle arguments = new Bundle();
+        arguments.putParcelable(MainActivityFragment.SELECTED_MOVIE, getIntent().getParcelableExtra(MainActivityFragment.SELECTED_MOVIE));
+
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.detail_container, new MovieDetailFragment())
                 .commit();
