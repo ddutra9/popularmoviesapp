@@ -21,8 +21,10 @@ import com.ddutra9.popularmoviesapp.task.ReviewsTask;
 import com.ddutra9.popularmoviesapp.task.TrailersTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 public class MovieDetailFragment extends Fragment implements AsyncTaskDelegate {
 
@@ -62,6 +64,7 @@ public class MovieDetailFragment extends Fragment implements AsyncTaskDelegate {
         ImageView movieIcon = (ImageView) view.findViewById(R.id.movie_icon);
         TextView voteAverageTV = (TextView) view.findViewById(R.id.vote_average);
         TextView descMovieTV = (TextView) view.findViewById(R.id.text_desc_movie);
+        TextView releaseYearTV = (TextView) view.findViewById(R.id.release_year);
 
         new TrailersTask(getContext(), this).execute(new String[]{""});
         new ReviewsTask(getContext(), this).execute(new String[]{""});
@@ -73,6 +76,9 @@ public class MovieDetailFragment extends Fragment implements AsyncTaskDelegate {
 
         voteAverageTV.setText(movie.getVoteAverage() + "/10");
         descMovieTV.setText(movie.getOverview());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        releaseYearTV.setText(sdf.format(new Date(movie.getReleaseDate())));
     }
 
     @Override
