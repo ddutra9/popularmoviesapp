@@ -19,7 +19,7 @@
                 android:id="@+id/title_movie_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="32sp"/>
+                android:textSize="@dimen/title_font"/>
 
         </android.support.v7.widget.LinearLayoutCompat>
 
@@ -29,7 +29,7 @@
             android:layout_gravity="left"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="@dimen/vertical_padding">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,8 +56,8 @@
                         android:id="@+id/release_year"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="34sp"
-                        android:text="2015"/>
+                        android:textSize="@dimen/title_font"
+                        android:text="@string/pref_release_year"/>
 
                     <ImageButton
                         android:id="@+id/mark_favorite_ib"
@@ -91,7 +91,7 @@
                             android:paddingBottom="@dimen/vertical_padding"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="32sp"
+                            android:textSize="@dimen/title_font"
                             android:textColor="@color/colorPrimaryDark"
                             android:text="@string/synopsis"/>
 
@@ -103,7 +103,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:gravity="right"
-                            android:text="8,1/10"/>
+                            android:text="@string/pref_vote_average"/>
 
                     </android.support.v7.widget.LinearLayoutCompat>
 
@@ -113,7 +113,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/vertical_padding"
-                        android:text="Por fim, você otimizará o fluxo completo da interação do usuário final, incluindo o que foi desenvolvido no estágio 1, e otimizá-lo para funcionar em tablets."/>
+                        android:text="@string/pref_desc_movie"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
@@ -141,7 +141,7 @@
                             android:paddingBottom="@dimen/vertical_padding"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="32sp"
+                            android:textSize="@dimen/title_font"
                             android:textColor="@color/colorPrimaryDark"
                             android:text="@string/trailers"/>
 
@@ -188,7 +188,7 @@
                             android:paddingBottom="@dimen/vertical_padding"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="32sp"
+                            android:textSize="@dimen/title_font"
                             android:textColor="@color/colorPrimaryDark"
                             android:text="@string/reviews"/>
 

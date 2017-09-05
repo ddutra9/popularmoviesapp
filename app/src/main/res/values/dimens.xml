@@ -2,4 +2,7 @@
     <dimen name="fab_margin">16dp</dimen>
     
     <dimen name="vertical_padding">16dp</dimen>
+
+    <dimen name="title_font">32sp</dimen>
+
 </resources>

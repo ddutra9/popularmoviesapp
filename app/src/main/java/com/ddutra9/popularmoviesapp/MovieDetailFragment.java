@@ -85,6 +85,7 @@ public class MovieDetailFragment extends Fragment implements AsyncTaskDelegate, 
         reviewsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         Picasso.with(getContext()).load(MovieAdapter.PREFIX_IMAGE_URL + movie.getPosterPath()).into(movieIcon);
+        movieIcon.setContentDescription(movie.getTitle());
 
         voteAverageTV.setText(movie.getVoteAverage() + "/10");
         descMovieTV.setText(movie.getOverview());

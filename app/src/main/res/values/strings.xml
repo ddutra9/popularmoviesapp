@@ -24,4 +24,7 @@
     <string name="pref_enable_favorite_false">Não ativado</string>
     <string name="pref_enable_favorite_true">Ativado</string>
     <string name="pref_enable_favorite_default">Não ativado</string>
+    <string name="pref_release_year">2015</string>
+    <string name="pref_vote_average">8,1/10</string>
+    <string name="pref_desc_movie">Por fim, você otimizará o fluxo completo da interação do usuário final, incluindo o que foi desenvolvido no estágio 1, e otimizá-lo para funcionar em tablets.</string>
 </resources>

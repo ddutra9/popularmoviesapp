@@ -44,6 +44,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         }
 
         Picasso.with(getContext()).load(PREFIX_IMAGE_URL + movie.getPosterPath()).into(viewHolder.iconView);
+        viewHolder.iconView.setContentDescription(movie.getTitle());
         Log.d(TAG, "imagePath: " + PREFIX_IMAGE_URL + movie.getPosterPath());
 
         return convertView;
