@@ -4,137 +4,198 @@
     android:layout_height="match_parent"
     tools:context="com.ddutra9.popularmoviesapp.MovieDetailFragment">
 
-    <LinearLayout
+    <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/fab_margin"
+            android:background="@color/cardview_shadow_start_color">
+
+            <TextView
+                android:id="@+id/title_movie_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="32sp"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="left|center_vertical"
-            android:layout_marginTop="@dimen/vertical_padding"
-            android:layout_marginBottom="@dimen/vertical_padding"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/movie_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/fab_margin"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left|center_vertical"
+                android:layout_marginTop="@dimen/vertical_padding"
+                android:layout_marginBottom="@dimen/vertical_padding"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/release_year"
+                <ImageView
+                    android:id="@+id/movie_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="34sp"
-                    android:text="2015"/>
+                    android:layout_marginRight="@dimen/fab_margin"/>
 
-                <ImageButton
-                    android:id="@+id/mark_favorite_ib"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/mark_favorite"
-                    android:background="@null"/>
+                    android:layout_gravity="right"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/release_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="34sp"
+                        android:text="2015"/>
+
+                    <ImageButton
+                        android:id="@+id/mark_favorite_ib"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/mark_favorite"
+                        android:background="@null"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.v7.widget.LinearLayoutCompat
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/fab_margin"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <android.support.v7.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="?editTextBackground">
+                    android:padding="@dimen/fab_margin"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="?editTextBackground">
+
+                        <TextView
+                            android:paddingTop="@dimen/vertical_padding"
+                            android:paddingBottom="@dimen/vertical_padding"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="32sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:text="@string/synopsis"/>
+
+                        <TextView
+                            android:id="@+id/vote_average"
+                            android:paddingTop="@dimen/vertical_padding"
+                            android:paddingBottom="@dimen/vertical_padding"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="8,1/10"/>
+
+                    </android.support.v7.widget.LinearLayoutCompat>
+
 
                     <TextView
-                        android:paddingTop="@dimen/vertical_padding"
-                        android:paddingBottom="@dimen/vertical_padding"
+                        android:id="@+id/text_desc_movie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="32sp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:text="@string/synopsis"/>
-
-                    <TextView
-                        android:id="@+id/vote_average"
-                        android:paddingTop="@dimen/vertical_padding"
-                        android:paddingBottom="@dimen/vertical_padding"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:text="8,1/10"/>
+                        android:layout_marginTop="@dimen/vertical_padding"
+                        android:text="Por fim, você otimizará o fluxo completo da interação do usuário final, incluindo o que foi desenvolvido no estágio 1, e otimizá-lo para funcionar em tablets."/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
+            </android.support.v7.widget.CardView>
 
-                <TextView
-                    android:id="@+id/text_desc_movie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/vertical_padding"
-                    android:text="Por fim, você otimizará o fluxo completo da interação do usuário final, incluindo o que foi desenvolvido no estágio 1, e otimizá-lo para funcionar em tablets."/>
-
-            </android.support.v7.widget.LinearLayoutCompat>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_marginTop="@dimen/fab_margin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.v7.widget.LinearLayoutCompat
-                android:padding="@dimen/fab_margin"
+            <android.support.v7.widget.CardView
+                android:layout_marginTop="@dimen/fab_margin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <android.support.v7.widget.LinearLayoutCompat
+                    android:padding="@dimen/fab_margin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="?editTextBackground">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:paddingTop="@dimen/vertical_padding"
-                        android:paddingBottom="@dimen/vertical_padding"
-                        android:layout_width="wrap_content"
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="32sp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:text="@string/trailers"/>
+                        android:orientation="horizontal"
+                        android:background="?editTextBackground">
+
+                        <TextView
+                            android:paddingTop="@dimen/vertical_padding"
+                            android:paddingBottom="@dimen/vertical_padding"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="32sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:text="@string/trailers"/>
+
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/youtube_trailers_rv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        </android.support.v7.widget.RecyclerView>
+
+                    </android.support.v7.widget.LinearLayoutCompat>
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_marginTop="@dimen/fab_margin"
+                android:padding="@dimen/fab_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
                 <android.support.v7.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:padding="@dimen/fab_margin"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="?editTextBackground">
+
+                        <TextView
+                            android:paddingTop="@dimen/vertical_padding"
+                            android:paddingBottom="@dimen/vertical_padding"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="32sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:text="@string/reviews"/>
+
+                    </android.support.v7.widget.LinearLayoutCompat>
 
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/youtube_trailers_rv"
+                        android:id="@+id/reviews_rv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -142,50 +203,10 @@
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
-            </android.support.v7.widget.LinearLayoutCompat>
+            </android.support.v7.widget.CardView>
 
-        </android.support.v7.widget.CardView>
+        </LinearLayout>
 
-        <android.support.v7.widget.CardView
-            android:layout_marginTop="@dimen/fab_margin"
-            android:padding="@dimen/fab_margin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.v7.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/fab_margin"
-                android:orientation="vertical">
-
-                <android.support.v7.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="?editTextBackground">
-
-                    <TextView
-                        android:paddingTop="@dimen/vertical_padding"
-                        android:paddingBottom="@dimen/vertical_padding"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="32sp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:text="@string/reviews"/>
-
-                </android.support.v7.widget.LinearLayoutCompat>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/reviews_rv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </android.support.v7.widget.RecyclerView>
-
-            </android.support.v7.widget.LinearLayoutCompat>
-
-        </android.support.v7.widget.CardView>
-
-    </LinearLayout>
+    </android.support.v7.widget.LinearLayoutCompat>
 
 </ScrollView>

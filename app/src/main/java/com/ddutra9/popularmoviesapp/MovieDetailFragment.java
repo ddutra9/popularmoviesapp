@@ -71,6 +71,8 @@ public class MovieDetailFragment extends Fragment implements AsyncTaskDelegate, 
         TextView voteAverageTV = (TextView) view.findViewById(R.id.vote_average);
         TextView descMovieTV = (TextView) view.findViewById(R.id.text_desc_movie);
         TextView releaseYearTV = (TextView) view.findViewById(R.id.release_year);
+        TextView titleMovieTV = (TextView) view.findViewById(R.id.title_movie_tv);
+
         markFavoriteIB = (ImageButton) view.findViewById(R.id.mark_favorite_ib);
         markFavoriteIB.setImageResource(R.drawable.ic_favorite_border_black_24dp);
 
@@ -86,6 +88,7 @@ public class MovieDetailFragment extends Fragment implements AsyncTaskDelegate, 
 
         voteAverageTV.setText(movie.getVoteAverage() + "/10");
         descMovieTV.setText(movie.getOverview());
+        titleMovieTV.setText(movie.getTitle());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         releaseYearTV.setText(sdf.format(new Date(movie.getReleaseDate())));

@@ -64,9 +64,8 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate 
         gridMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
-                intent.putExtra(SELECTED_MOVIE, movieList.get(position));
-                startActivity(intent);
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.selectedMovie(movieList.get(position));
             }
         });
     }
