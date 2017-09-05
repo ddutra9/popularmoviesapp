@@ -1,10 +1,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.ddutra9.popularmoviesapp.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:id="@+id/group_sort_movies"
+        android:checkableBehavior="single">
+        <item android:id="@+id/menu_sort_by_popular"
+            android:title="@string/pref_units_label_popular"
+            android:checked="true"
+            app:showAsAction="never"/>
+        <item android:id="@+id/menu_sort_by_top_rated"
+            android:title="@string/pref_units_label_top_rated"
+            app:showAsAction="never"/>
+        <item android:id="@+id/menu_favorite"
+            android:title="@string/pref_enable_favorite"
+            app:showAsAction="never"/>
+    </group>
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/menu_toggle_language"
+        app:showAsAction="ifRoom"
+        android:title="@string/pt_language"/>
 </menu>

@@ -2,7 +2,6 @@
     <string name="app_name">Popular Movies App</string>
     <string name="action_settings">Configurações</string>
     <string name="pref_order_movies">Ordenar por</string>
-    <string name="pref_order_key" translatable="false">order</string>
 
     <string name="title_activity_settings">Configurações</string>
     <string name="no_internet_connected">Sem acesso a internet!</string>
@@ -19,12 +18,20 @@
     <string name="trailers">Trailers</string>
     <string name="synopsis">Sinopse</string>
     <string name="mark_favorite">Marcar como favorito</string>
-    <string name="pref_enable_favorite">Buscar somente favoritos</string>
-    <string name="pref_enable_favorite_key" translatable="false">enable_favorite</string>
     <string name="pref_enable_favorite_false">Não ativado</string>
     <string name="pref_enable_favorite_true">Ativado</string>
     <string name="pref_enable_favorite_default">Não ativado</string>
     <string name="pref_release_year">2015</string>
     <string name="pref_vote_average">8,1/10</string>
     <string name="pref_desc_movie">Por fim, você otimizará o fluxo completo da interação do usuário final, incluindo o que foi desenvolvido no estágio 1, e otimizá-lo para funcionar em tablets.</string>
+
+
+    <string name="pref_order_popular_key" translatable="false">popular</string>
+    <string name="pref_order_top_rated_key" translatable="false">top_rated</string>
+
+    <string name="pref_units_label_popular">Mais populares</string>
+    <string name="pref_units_label_top_rated">Mais votados</string>
+    <string name="pref_enable_favorite">Buscar somente favoritos</string>
+    <string name="pt_language">pt-BR</string>
+    <string name="en_language">en-US</string>
 </resources>
